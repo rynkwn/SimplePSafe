@@ -73,8 +73,12 @@ public class Main {
 				fileNames.add(name);
 				JOptionPane.showMessageDialog(null, "New password saved with name: " + name);
 			} else {
-				byte[] data = Files.readAllBytes(Paths.get(localDirectory + "\\" + fileName));
-				JOptionPane.showMessageDialog(null, decrypt(data, key));
+				if(fileName.equals(MASTER_PASSWORD_FILE)) {
+					JOptionPane.showInputDialog("You really don't want to read your own master password file.");
+				} else {
+					byte[] data = Files.readAllBytes(Paths.get(localDirectory + "\\" + fileName));
+					JOptionPane.showMessageDialog(null, decrypt(data, key));
+				}
 			}
 		}
 	}
