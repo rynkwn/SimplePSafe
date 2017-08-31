@@ -68,13 +68,13 @@ public class Main {
 				name += ".enc";
 				String pw = JOptionPane.showInputDialog(null, "Password to remember.");
 				
-				byte[] newEncr = encrypt(pw, password);
+				byte[] newEncr = encrypt(pw, key);
 				writeBytesToFile(localDirectory, name, newEncr);
 				fileNames.add(name);
 				JOptionPane.showMessageDialog(null, "New password saved with name: " + name);
 			} else {
 				byte[] data = Files.readAllBytes(Paths.get(localDirectory + "\\" + fileName));
-				JOptionPane.showMessageDialog(null, decrypt(data, password));
+				JOptionPane.showMessageDialog(null, decrypt(data, key));
 			}
 		}
 	}
