@@ -56,6 +56,7 @@ public class Main {
 				password = null;
 				key = null;
 				accessData(localDirectory, true);
+				lastInteracted = curTime;
 			}
 			
 			// Now main action sequence.
@@ -74,10 +75,10 @@ public class Main {
 				JOptionPane.showMessageDialog(null, "New password saved with name: " + name);
 			} else {
 				if(fileName.equals(MASTER_PASSWORD_FILE)) {
-					JOptionPane.showInputDialog("You really don't want to read your own master password file.");
+					JOptionPane.showMessageDialog(null, "You really don't want to read your own master password file.");
 				} else {
 					byte[] data = Files.readAllBytes(Paths.get(localDirectory + "\\" + fileName));
-					JOptionPane.showMessageDialog(null, decrypt(data, key));
+					copyMessage(decrypt(data, key));
 				}
 			}
 		}
@@ -89,6 +90,17 @@ public class Main {
 			sb.append(str + "\n");
 		}
 		return sb.toString();
+	}
+	
+	public static void copyMessage(String text) {
+		JTextArea ta = new JTextArea(10, 10);
+        ta.setText(text);
+        ta.setWrapStyleWord(true);
+        ta.setLineWrap(true);
+        ta.setCaretPosition(0);
+        ta.setEditable(false);
+
+        JOptionPane.showMessageDialog(null, new JScrollPane(ta), "RESULT", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public static String copyInput(String text) {
